@@ -6,6 +6,7 @@
       ":automergePatch",
       ":automergeMinor",
       ":automergeDigest",
+      ":disableDependencyDashboard",
       ":prConcurrentLimit10",
       ":prHourlyLimitNone",
       ":renovatePrefix",
