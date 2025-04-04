@@ -3,6 +3,7 @@
     "extends": [
       "config:recommended",
       ":label(renovate)",
+      ":automergeMajor",
       ":automergePatch",
       ":automergeMinor",
       ":automergeDigest",
