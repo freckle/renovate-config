@@ -1,0 +1,36 @@
+name: Audit
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 0 * * 0' # Every Sunday at midnight UTC
+
+  # Run to test changes
+  pull_request:
+    paths:
+      - '.github/workflows/audit.yml'
+      - 'renovate-audit/**'
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+          working-directory: renovate-audit
+
+      - id: token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.FRECKLE_AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.FRECKLE_AUTOMATION_PRIVATE_KEY }}
+          owner: freckle # be able to query all repos
+
+      - name: Audit
+        run: bundle exec bin/renovate-audit
+        working-directory: renovate-audit
+        env:
+          GITHUB_TOKEN: ${{ steps.token.outputs.token }}
