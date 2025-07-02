@@ -2,26 +2,29 @@
 $LOAD_PATH << File.expand_path("../lib", __dir__)
 
 require "base64"
+require "rainbow"
 require "octokit"
+require "optparse"
 require "renovate_audit/github/contents"
 require "renovate_audit/github/pull_request"
 require "renovate_audit/github/repository"
+require "renovate_audit/options"
 require "renovate_audit/report"
 
 module RenovateAudit
   class Main
-    def self.run(token, organization)
-      client = Octokit::Client.new(access_token: token)
+    def self.run(options)
+      client = Octokit::Client.new(access_token: options.token)
       client.auto_paginate = true
 
       report = Report.new
-      repositories = GitHub::Repository.for_organization(client, organization)
+      repositories = GitHub::Repository.for_organization(client, options.organization).reject do |repo|
+        options.excludes.include?(repo.name) || repo.archived || repo.forked
+      end
 
-      print "Fetching data on #{repositories.size} repositories..."
+      puts "Fetching data on #{repositories.size} repositories..."
 
       repositories.each do |repository|
-        next if repository.archived or repository.forked
-
         pull_requests = GitHub::PullRequest.list_open(client, repository)
 
         contents = Report::AUDIT_PATHS.each.with_object({}) do |path, h|
@@ -29,15 +32,11 @@ module RenovateAudit
         end
 
         report.audit_repository(repository, pull_requests, contents)
-
-        print "."
       end
-
-      puts
 
       if report.issues.any?
         report.render_issues
-        exit 1
+        exit 1 if options.exit_code
       end
 
       puts "All repositories have passed the audit"
@@ -45,7 +44,14 @@ module RenovateAudit
   end
 end
 
-token = ENV["GITHUB_TOKEN"] or raise "GITHUB_TOKEN environment variable must be set"
-organization = ENV["GITHUB_REPOSITORY_OWNER"] or raise "GITHUB_REPOSITORY_OWNER environment variable must be set"
+if ENV["GITHUB_ACTIONS"] == "true"
+  Rainbow.enabled = true # spoof tty detection
+end
 
-RenovateAudit::Main.run(token, organization)
+unless token = ENV["GITHUB_TOKEN"]
+  $stderr.puts "GITHUB_TOKEN environment variable must be set"
+  exit 1
+end
+
+options = RenovateAudit::Options.new
+RenovateAudit::Main.run(options)
