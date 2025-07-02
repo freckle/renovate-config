@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << File.expand_path("../lib", __dir__)
+
+require "base64"
+require "octokit"
+require "renovate_audit/github/contents"
+require "renovate_audit/github/pull_request"
+require "renovate_audit/github/repository"
+require "renovate_audit/report"
+
+module RenovateAudit
+  class Main
+    def self.run(token, organization)
+      client = Octokit::Client.new(access_token: token)
+      client.auto_paginate = true
+
+      report = Report.new
+      repositories = GitHub::Repository.for_organization(client, organization)
+
+      print "Fetching data on #{repositories.size} repositories..."
+
+      repositories.each do |repository|
+        next if repository.archived or repository.forked
+
+        pull_requests = GitHub::PullRequest.list_open(client, repository)
+
+        contents = Report::AUDIT_PATHS.each.with_object({}) do |path, h|
+          h[path] = GitHub::Contents.get(client, repository, path)
+        end
+
+        report.audit_repository(repository, pull_requests, contents)
+
+        print "."
+      end
+
+      puts
+
+      if report.issues.any?
+        report.render_issues
+        exit 1
+      end
+
+      puts "All repositories have passed the audit"
+    end
+  end
+end
+
+token = ENV["GITHUB_TOKEN"] or raise "GITHUB_TOKEN environment variable must be set"
+organization = ENV["GITHUB_REPOSITORY_OWNER"] or raise "GITHUB_REPOSITORY_OWNER environment variable must be set"
+
+RenovateAudit::Main.run(token, organization)
