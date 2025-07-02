@@ -30,7 +30,7 @@ jobs:
           owner: freckle # be able to query all repos
 
       - name: Audit
-        run: bundle exec bin/renovate-audit
+        run: bundle exec bin/renovate-audit --org freckle --no-exit-code
         working-directory: renovate-audit
         env:
           GITHUB_TOKEN: ${{ steps.token.outputs.token }}

@@ -1,3 +1,7 @@
+if ENV["GITHUB_ACTIONS"] == "true"
+  Rainbow.enabled = true # spoof tty detection
+end
+
 module RenovateAudit
   class Report
     AUDIT_PATHS = [
@@ -11,10 +15,10 @@ module RenovateAudit
     Issue = Struct.new(:key, :repository)
 
     KEY_PHRASES = [
-      [:not_configured, "not configured for Renovate", "add a renovate.json"],
-      [:stale_open, "with stale open Renovate PRs", "these may be failing CI"],
-      [:no_release, "without any release workflow", "add a .github/workflows/release.yml"],
-      [:release_not_automatic, "without automatic release", "update the project to use semantic-release"],
+      [:not_configured, "not configured for Renovate", "This project's dependencies are not being automatically updated", "add a renovate.json"],
+      [:stale_open, "with stale open Renovate PRs", "Renovate's updates are not making it to the main branch", "address failing CI"],
+      [:no_release, "without any release workflow", "Renovate's updates are not being released", "add a .github/workflows/release.yml"],
+      [:release_not_automatic, "without automatic release", "Renovate's updates are not being released automatically", "update the project to use semantic-release"],
     ]
 
     attr_reader :issues
@@ -53,17 +57,36 @@ module RenovateAudit
         hash
       end
 
-      KEY_PHRASES.each do |key, phrase, tip|
+      KEY_PHRASES.each do |key, phrase, problem, tip|
         repos = issues_by_key.fetch(key, [])
 
         if repos.any?
-          puts "Found #{repos.size} repositories #{phrase}:"
+          puts "Found #{cyan(repos.size)} repositories #{magenta(phrase)}:"
           puts "  - #{repos.join("\n  - ")}"
           puts
-          puts "  => Tip: #{tip}"
+          puts "  #{bright(problem)}"
+          puts "  #{green("Tip:")} #{tip}"
           puts
         end
       end
+    end
+
+    private
+
+    def bright(x)
+      Rainbow(x).bright
+    end
+
+    def cyan(x)
+      Rainbow(x).cyan
+    end
+
+    def green(x)
+      Rainbow(x).green
+    end
+
+    def magenta(x)
+      Rainbow(x).magenta
     end
   end
 end

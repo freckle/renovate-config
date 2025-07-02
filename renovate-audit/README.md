@@ -9,6 +9,21 @@ For each repository in an organization, determine if:
 
 ## Usage
 
+```console
+% renovate-audit --help
+Usage: renovate-audit [options]
+        --org=ORG                    Organization to audit (default $GITHUB_REPOSITORY_OWNER)
+        --exclude=NAME               Exclude repository by NAME
+        --[no-]exit-code             Exit with code 1 if issues are found (default: true)
+    -h, --help   
+```
+
+## GitHub Actions
+
+See [../.github/workflows/audit.yml](../.github/workflows/audit.yml).
+
+## Locally
+
 Install any Ruby dependencies:
 
 ```console
