@@ -37,9 +37,9 @@ module RenovateAudit
       if report.issues.any?
         report.render_issues
         exit 1 if options.exit_code
+      else
+        puts "All repositories have passed the audit"
       end
-
-      puts "All repositories have passed the audit"
     end
   end
 end
