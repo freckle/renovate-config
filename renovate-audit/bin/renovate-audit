@@ -13,7 +13,9 @@ require "renovate_audit/report"
 
 module RenovateAudit
   class Main
-    def self.run(options)
+    def self.run
+      options = Options.new
+
       client = Octokit::Client.new(access_token: options.token)
       client.auto_paginate = true
 
@@ -48,5 +50,4 @@ if ENV["GITHUB_ACTIONS"] == "true"
   Rainbow.enabled = true # spoof tty detection
 end
 
-options = RenovateAudit::Options.new
-RenovateAudit::Main.run(options)
+RenovateAudit::Main.run
