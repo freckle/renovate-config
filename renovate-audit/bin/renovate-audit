@@ -48,10 +48,5 @@ if ENV["GITHUB_ACTIONS"] == "true"
   Rainbow.enabled = true # spoof tty detection
 end
 
-unless token = ENV["GITHUB_TOKEN"]
-  $stderr.puts "GITHUB_TOKEN environment variable must be set"
-  exit 1
-end
-
 options = RenovateAudit::Options.new
 RenovateAudit::Main.run(options)
