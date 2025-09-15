@@ -21,5 +21,6 @@
       "enabled": true,
       "labels": ["security"],
       "automerge": true
-    }
+    },
+    "osvVulnerabilityAlerts": true
   }
