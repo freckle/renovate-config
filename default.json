@@ -19,10 +19,7 @@
     "platformAutomerge": false,
     "vulnerabilityAlerts": {
       "enabled": true,
-      "minimumReleaseAge": null,
-      "schedule": [],
-      "dependencyDashboardApproval": false,
-      "stabilityDays": 0,
-      "prCreation": "immediate"
+      "labels": ["security"],
+      "automerge": true
     }
   }
