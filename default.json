@@ -16,5 +16,19 @@
       "schedule:daily"
     ],
     "minimumReleaseAge": "5 days",
-    "platformAutomerge": false
+    "platformAutomerge": false,
+    "vulnerabilityAlerts": {
+      "enabled": true,
+      "labels": ["security"],
+      "automerge": true,
+      "groupName": null,
+      "schedule": [],
+      "dependencyDashboardApproval": false,
+      "minimumReleaseAge": null,
+      "commitMessageSuffix": "[SECURITY]",
+      "branchTopic": "renovate/{{{datasource}}}-{{{depNameSanitized}}}-vulnerability",
+      "prCreation": "immediate",
+      "vulnerabilityFixStrategy": "lowest"
+    },
+    "osvVulnerabilityAlerts": true
   }
