@@ -16,5 +16,13 @@
       "schedule:daily"
     ],
     "minimumReleaseAge": "5 days",
-    "platformAutomerge": false
+    "platformAutomerge": false,
+    "vulnerabilityAlerts": {
+      "enabled": true,
+      "minimumReleaseAge": null,
+      "schedule": [],
+      "dependencyDashboardApproval": false,
+      "stabilityDays": 0,
+      "prCreation": "immediate"
+    }
   }
