@@ -12,6 +12,7 @@
       ":prHourlyLimitNone",
       ":renovatePrefix",
       ":semanticCommits",
+      ":semanticPrefixFixDepsChoreOthers",
       ":timezone(America/New_York)",
       "schedule:daily"
     ],
