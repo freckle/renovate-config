@@ -91,42 +91,6 @@
         "extends": ["monorepo:tanstack-table"],
         "matchUpdateTypes": ["major"],
         "groupName": "tanstack-table (major) ({{packageFileDir}})"
-      },
-      {
-        "description": "Group tanstack-router packages together for minor/patch",
-        "extends": ["monorepo:tanstack-router"],
-        "matchUpdateTypes": ["minor", "patch", "digest"],
-        "groupName": "tanstack-router"
-      },
-      {
-        "description": "Split tanstack-router major updates by package.json",
-        "extends": ["monorepo:tanstack-router"],
-        "matchUpdateTypes": ["major"],
-        "groupName": "tanstack-router (major) ({{packageFileDir}})"
-      },
-      {
-        "description": "Group tanstack-form packages together for minor/patch",
-        "extends": ["monorepo:tanstack-form"],
-        "matchUpdateTypes": ["minor", "patch", "digest"],
-        "groupName": "tanstack-form"
-      },
-      {
-        "description": "Split tanstack-form major updates by package.json",
-        "extends": ["monorepo:tanstack-form"],
-        "matchUpdateTypes": ["major"],
-        "groupName": "tanstack-form (major) ({{packageFileDir}})"
-      },
-      {
-        "description": "Group tanstack-virtual packages together for minor/patch",
-        "extends": ["monorepo:tanstack-virtual"],
-        "matchUpdateTypes": ["minor", "patch", "digest"],
-        "groupName": "tanstack-virtual"
-      },
-      {
-        "description": "Split tanstack-virtual major updates by package.json",
-        "extends": ["monorepo:tanstack-virtual"],
-        "matchUpdateTypes": ["major"],
-        "groupName": "tanstack-virtual (major) ({{packageFileDir}})"
       }
     ],
     "vulnerabilityAlerts": {
