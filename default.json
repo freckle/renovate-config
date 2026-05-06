@@ -19,6 +19,80 @@
     "minimumReleaseAge": "5 days",
     "platformAutomerge": false,
     "rangeStrategy": "bump",
+    "packageRules": [
+      {
+        "description": "Group eslint packages together for minor/patch",
+        "extends": ["monorepo:eslint"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "eslint"
+      },
+      {
+        "description": "Split eslint major updates by package.json",
+        "extends": ["monorepo:eslint"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "eslint (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Group typescript-eslint packages together for minor/patch",
+        "extends": ["monorepo:typescript-eslint"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "typescript-eslint"
+      },
+      {
+        "description": "Split typescript-eslint major updates by package.json",
+        "extends": ["monorepo:typescript-eslint"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "typescript-eslint (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Group react packages together for minor/patch",
+        "matchPackageNames": ["react", "react-dom", "react-is", "@types/react", "@types/react-dom", "@types/react-is"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "react"
+      },
+      {
+        "description": "Split react major updates by package.json",
+        "matchPackageNames": ["react", "react-dom", "react-is", "@types/react", "@types/react-dom", "@types/react-is"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "react (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Group fortawesome packages together for minor/patch",
+        "matchPackageNames": ["@fortawesome/**"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "fortawesome"
+      },
+      {
+        "description": "Split fortawesome major updates by package.json",
+        "matchPackageNames": ["@fortawesome/**"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "fortawesome (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Group tanstack-query packages together for minor/patch",
+        "extends": ["monorepo:tanstack-query"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "tanstack-query"
+      },
+      {
+        "description": "Split tanstack-query major updates by package.json",
+        "extends": ["monorepo:tanstack-query"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "tanstack-query (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Group tanstack-table packages together for minor/patch",
+        "extends": ["monorepo:tanstack-table"],
+        "matchUpdateTypes": ["minor", "patch", "digest"],
+        "groupName": "tanstack-table"
+      },
+      {
+        "description": "Split tanstack-table major updates by package.json",
+        "extends": ["monorepo:tanstack-table"],
+        "matchUpdateTypes": ["major"],
+        "groupName": "tanstack-table (major) ({{packageFileDir}})"
+      }
+    ],
     "vulnerabilityAlerts": {
       "enabled": true,
       "labels": ["security"],
