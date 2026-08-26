@@ -91,6 +91,11 @@
         "extends": ["monorepo:tanstack-table"],
         "matchUpdateTypes": ["major"],
         "groupName": "tanstack-table (major) ({{packageFileDir}})"
+      },
+      {
+        "description": "Wait for typescript 7.1 because 7.0 breaks eslint, ts-jest, and others",
+        "matchPackageNames": ["typescript"],
+        "allowedVersions": "!/^7\\.0/"
       }
     ],
     "vulnerabilityAlerts": {
