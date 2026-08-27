@@ -106,6 +106,7 @@
       "schedule": [],
       "dependencyDashboardApproval": false,
       "minimumReleaseAge": null,
+      "semanticCommitType": "fix",
       "commitMessageSuffix": "[SECURITY]",
       "branchTopic": "renovate/{{{datasource}}}-{{{depNameSanitized}}}-vulnerability",
       "prCreation": "immediate",
